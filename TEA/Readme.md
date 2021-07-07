@@ -148,15 +148,24 @@ A few notes:
 
 ### **FAQ**
 
-* Where is the documentation on how to get Vnet BGP L3 Gateway up and running?
+* Where is IPAM?
+
+* Where do I get the latest information on deploying iDNS services?
+
+  * This is a start:
+  
+    <https://docs.microsoft.com/en-us/windows-server/networking/sdn/technologies/idns-for-sdn>
+
+* What happened to LoadBalancers tab under networking in WAC?
+
+* Where can I find detailed examples on how to configure L3 forwarding for
+  VNET gateway using Powershell and WAC?
   * What address do you use as the BGP peering IP (IP of GW?)?
 
 * When will I be able to auto assign an IP address for a VM on a subnet?
   * Currently you must assign an IP address manually!
 
-* Is the FrontendIP address of a GW VM an PA address?
-
-* What peer addresses do I use for configuring BGP on TOR switches?
+* What addresses do I use for BGP peering to MUX on TOR switches?
   * Use the PA addresses of LB MUX'es
 
 * Public vs Private VIP
@@ -174,10 +183,7 @@ A few notes:
     * The 'Microsoft Azure VFP Switch Extension' is shipped by default with
       Microsoft HyperV. However, it is disabled by default.
 
-* How do we remove stale rules from VSwitch?
-
 * Is there a prescribed procedure for removing SDN?
-
 
 ### **Other Info:**
 
