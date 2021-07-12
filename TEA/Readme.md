@@ -144,11 +144,15 @@ A few notes:
 
     ```
 
-
-
 ### **FAQ**
 
-* Where is IPAM?
+* I can no longer add a VM net adapter with SDN isolation post VM creation,
+  what happened to this functionality?
+  * Apparently something broke in WAC. This should be fixed in a new release
+    of WAC.
+
+* We would like to try out Auto VM Activation, where do we find MAK keys for
+  Azure Stack HCI host, or do we use Windows server 2019 MAK keys?
 
 * Where do I get the latest information on deploying iDNS services?
 
@@ -157,12 +161,21 @@ A few notes:
     <https://docs.microsoft.com/en-us/windows-server/networking/sdn/technologies/idns-for-sdn>
 
 * What happened to LoadBalancers tab under networking in WAC?
+  * Check SDN LB extension in WAC. This must be installed before you will see
+    LB tab show up in Windows Admin Center.
 
 * Where can I find detailed examples on how to configure L3 forwarding for
   VNET gateway using Powershell and WAC?
+  * L3 Forwarding example:
+    
+    <https://docs.microsoft.com/en-us/azure-stack/hci/manage/gateway-connections#create-an-l3-connection>
+  
   * What address do you use as the BGP peering IP (IP of GW?)?
+    * You will need to set up a Logical Network and subnet. Gateways will
+      terminate on an address on one of the subnets configured for the
+      logical network.    
 
-* When will I be able to auto assign an IP address for a VM on a subnet?
+* When will I be able to auto assign an IP address for a VM on a subnet (IPAM)?
   * Currently you must assign an IP address manually!
 
 * What addresses do I use for BGP peering to MUX on TOR switches?
@@ -215,10 +228,6 @@ Hostname = teacloud-dc1
 
   Install-ADDSForest @params
   ```
-
-
-
-
 
 ### **Documentation:**
 
