@@ -89,7 +89,9 @@ $vlanNetwork | ConvertTo-Json -Depth 4
 
     #   $vlanNetwork = Get-NetworkControllerLogicalNetwork -ConnectionUri $uri -ResourceId "L3Forwarding"
 
+# Remove Logical Network
 
+    #   Remove-NetworkControllerLogicalNetwork -ConnectionUri $uri -ResourceId $vlanNetwork.ResourceId
 
 #Step 4b Create a Network Connection JSON Object and add it to Network Controller.
 
@@ -139,8 +141,8 @@ $bgpRouterproperties = New-Object Microsoft.Windows.NetworkController.VGwBgpRout
 
 # Update the BGP Router properties
 $bgpRouterproperties.ExtAsNumber = "0.64515" # Why does 0 have to prefix ASN?
-$bgpRouterproperties.RouterId = "10.3.224.6" # Has no impact?
-$bgpRouterproperties.RouterIP = @("10.3.224.6") # Has no impact?
+$bgpRouterproperties.RouterId = "172.16.0.4" # Has no impact? Must be on routing subnet!?
+$bgpRouterproperties.RouterIP = @("172.16.0.4") # Has no impact? Must be on routing subnet!?
 
 # Add the new BGP Router for the tenant
 $bgpRouter = New-NetworkControllerVirtualGatewayBgpRouter -ConnectionUri $uri -VirtualGatewayId $virtualGW.ResourceId -ResourceId "TEA_BgpRouter1" -Properties $bgpRouterProperties -Force
@@ -149,7 +151,7 @@ $bgpRouter = New-NetworkControllerVirtualGatewayBgpRouter -ConnectionUri $uri -V
     #   Remove-NetworkControllerVirtualGatewayBgpRouter -ConnectionUri $uri -ResourceId "TEA_BgpRouter1" -VirtualGatewayId $virtualGW.ResourceId
 
     # View BGP Router on Vnet Gateway
-    #   get-NetworkControllerVirtualGatewayBgpRouter -ConnectionUri $uri -VirtualGatewayId $virtualGW.ResourceId
+    #   $bgpRouter = get-NetworkControllerVirtualGatewayBgpRouter -ConnectionUri $uri -VirtualGatewayId $virtualGW.ResourceId
 
 
 #Step 5b Add BGP Peer
@@ -163,10 +165,10 @@ $bgpPeerProperties.AsNumber = 64521
 $bgpPeerProperties.ExtAsNumber = "0.64521"
 
 # Add the new BGP Peer for tenant
-New-NetworkControllerVirtualGatewayBgpPeer -ConnectionUri $uri -VirtualGatewayId $virtualGW.ResourceId -BgpRouterName $bgpRouter.ResourceId -ResourceId "TEA_BGP_Peer" -Properties $bgpPeerProperties -Force
+$BGPPeer = New-NetworkControllerVirtualGatewayBgpPeer -ConnectionUri $uri -VirtualGatewayId $virtualGW.ResourceId -BgpRouterName $bgpRouter.ResourceId -ResourceId "TEA_BGP_Peer" -Properties $bgpPeerProperties -Force
 
     # View BGP Peer
-    #    Get-NetworkControllerVirtualGatewayBgpPeer -ConnectionUri $uri -VirtualGatewayId $virtualGW.ResourceId -BgpRouterName $bgpRouter.ResourceId
+    #    $BGPPeer = Get-NetworkControllerVirtualGatewayBgpPeer -ConnectionUri $uri -VirtualGatewayId $virtualGW.ResourceId -BgpRouterName $bgpRouter.ResourceId
 
     # Remove BGP Peer
-    #   Remove-NetworkControllerVirtualGatewayBgpPeer -ConnectionUri $uri -VirtualGatewayId $virtualGW.ResourceId -BgpRouterName $bgpRouter.ResourceId -ResourceId "TEA_BGP_Peer"
+    #   Remove-NetworkControllerVirtualGatewayBgpPeer -ConnectionUri $uri -VirtualGatewayId $virtualGW.ResourceId -BgpRouterName $bgpRouter.ResourceId -ResourceId $BGPPeer.ResourceId
