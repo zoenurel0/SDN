@@ -52,7 +52,7 @@ $VirtualGWProperties.BgpRouters = @()
 $virtualGW = New-NetworkControllerVirtualGateway -ConnectionUri $uri  -ResourceId "TeaCloud_VirtualGW" -Properties $VirtualGWProperties -Force
 
     #View
-    #   Get-NetworkControllerVirtualGateway -ConnectionUri $uri -ResourceId $virtualGW.resourceID
+    #   $virtualGW = Get-NetworkControllerVirtualGateway -ConnectionUri $uri -ResourceId $virtualGW.resourceID
 
     #Remove
     #   Remove-NetworkControllerVirtualGateway -ResourceId $virtualGW.resourceID -ConnectionUri $uri

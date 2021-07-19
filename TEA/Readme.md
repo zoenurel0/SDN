@@ -16,7 +16,42 @@ CD C:\git\sdn\TEA\CleanupSDN
 
 ## **Networking**
 
-### Setting port profile to provide traditional VLAN isolation
+### **Notes about Routing Compartments**
+
+Windows has a concept of "Routing Compartments" which behave similar to VRF's
+(Virtual Route Forwarders). These "Routing Compartments" provide isolation
+of routing information between multiple tenants. Some commands (i.e. Ping and
+Ipconfig) need to have extra parameters attached when using these commands.
+
+* Ping a device within a routing domain, where N is the Routing compartment
+  ID associated with a tenant.
+
+  ```bash
+  Ping -c N x.x.x.x
+  ```
+
+* View all interfaces in all routing compartments.
+
+  ```bash
+  ipconfig /allcompartments /all
+  ```
+
+* View all routes within a Routing Compartment (Like VRF, one for each tenant)
+
+  ```powershell
+  Get-NetRoute -IncludeAllCompartments -CompartmentId $compartmentIDNumber
+  ```
+
+### **OVSDB Client Dump**
+
+To dump the "Open Virtual Switch Database" associated with the VTEP 
+of the HyperV extensible switch, use the following command.
+
+```bash
+ovsdb-client dump tcp:127.0.0.1:6641 ms_vtep
+```
+
+### **Setting port profile to provide traditional VLAN isolation**
 
 * Note: Use the procedure below to enable VLAN isolation and not SDN isolation.
 
@@ -106,7 +141,13 @@ A few notes:
 
 --------
 
-### Troubleshooting
+### **Troubleshooting**
+
+* **View VLAN Isolation settings of a VM Network Adapter**
+
+```powershell
+Get-VMNetworkAdapterIsolation -VMName 'myVM'
+```
 
 * **Get SDDC Logs**
 
