@@ -47,6 +47,7 @@ Ipconfig) need to have extra parameters attached when using these commands.
 To dump the "Open Virtual Switch Database" associated with the VTEP 
 of the HyperV extensible switch, use the following command.
 
+(Execute from Host where tenant VM is running)
 ```bash
 ovsdb-client dump tcp:127.0.0.1:6641 ms_vtep
 ```
@@ -105,7 +106,6 @@ Thanks
 
 Anirban
 
-
 ### **VFP Info**
 
 [6/18 4:59 PM] Jocelyn Berrendonner
@@ -141,6 +141,28 @@ A few notes:
 
 --------
 
+**Dumping VFP Port Rules on VSwitch**
+
+  From the host where VM is located, run:
+
+  ```bash
+  Vfpctrl.exe /list-vmswitch-port
+  ```
+  Search for VM you are interested in from the output of the above command and
+  note the 'Port Name' field(s), then run:
+
+  ```bash
+  vfpctrl.exe /port <Port Name>  /list-rule
+  ```
+
+  Example:
+
+  ```bash
+  VM0: vfpctrl /port 6C255B95-2CBF-4945-B9CD-0AEB6FC1D95F /list-rule
+  GW02 external port: vfpctrl /port 6AF3867B-C70E-472D-BCA6-CAAA6FE92D52 /list-rule
+  GW02 internal port: vfpctrl /port 64902F0A-FBD1-4B77-BFD1-073EC27B800A /list-rule
+  ```
+--------
 ### **Troubleshooting**
 
 * **View VLAN Isolation settings of a VM Network Adapter**
@@ -269,6 +291,7 @@ Hostname = teacloud-dc1
 
   Install-ADDSForest @params
   ```
+
 
 ### **Documentation:**
 
